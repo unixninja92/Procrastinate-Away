@@ -1,10 +1,4 @@
-makePattern = (url) -> ///^
-  (https?:\/\/)?
-  ([\da-z\.-]+)?
-  #{url}
-  ([\/\w \.-]*)*
-  \/?
-  $///
+
 
 
 class @Blocker
@@ -12,9 +6,10 @@ class @Blocker
     @loggedIn = false
     @isWhitelist = false
     @list = [
-      'cnn.com'
+      'cnn.com',
+      'yahoo.com'
     ]
-    @areBlocking = false
+    @areBlocking = yes
     @toPage = false
 
 
@@ -30,10 +25,21 @@ class @Blocker
 
   isWhitelist: -> @isWhitelist
 
+  makePattern: (url) -> ///^
+    (https?:\/\/)?
+    ([\da-z\.-]+)?
+    #{url}
+    ([\/\w \.-]*)*
+    \/?
+    $///
+
   block: (id, url) ->
-    if toPage
-      chrome.tabs.update(id, {url:""})
+
+    if @toPage
+      console.log("page")
+      # chrome.tabs.update(id, {url:""})
     else
+      console.log("rediret")
       chrome.tabs.update(id, {url:chrome.extension.getURL('blocked.html')})
 
 
@@ -41,14 +47,15 @@ class @Blocker
     if @list?
       bool = false
       for domain in @list
-        if url.match makePattern domain
+        if url.match @makePattern domain
           bool = true
           break
       if @isWhitelist then bool = not bool
-      if testmode
-        block id, url
+      console.log("test")
+      if not testmode and bool
+        @block id, url
       bool
 
   run: (tab) ->
     return false if not @areBlocking
-    checkUrl tab.id, tab.url, false
+    @checkUrl tab.id, tab.url, false
