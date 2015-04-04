@@ -9,8 +9,13 @@
     "default_popup": "popup.html"
   },
 
+  "background": {
+    "scripts": ["lib/background.js"]
+  },
+
   "permissions": [
     "tabs",
+    "cookies",
     "*://*/*"
     ]
 }

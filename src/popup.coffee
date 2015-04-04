@@ -1,4 +1,4 @@
-blocker = new Blocker()
+blocker = getBlocker()
 
 chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tab) ->
   url = tab[0].url
