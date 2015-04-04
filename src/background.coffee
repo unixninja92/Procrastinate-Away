@@ -1,21 +1,30 @@
 blocker = new Blocker()
-xhr = new XMLHttpRequest()
 
 @getBlocker = -> blocker
 
-# chrome.cookies.onChanged.addListener((removed, cookie, cause) ->
-#   if cookie.domain is "blocker.obscure.systems"
-#     if removed
-#       xhr.open("GET", "http", true)
-#       xhr.onreadystatechange ->
-#         newJson = JSON.parse(xhr.responseText) if xhr.readyState is 4
-#       )
+@getJson = ->
+  console.log("Hey there ;)")
+  xhr = new XMLHttpRequest()
+  cookie = null
+  chrome.cookies.get({url:"http://blocker.obscure.systems/", name:"token" },
+  (cook) ->
+    cookie = cook.value
+    xhr.open("GET", "http://blocker.obscure.systems/get-active-todos", true)
+    xhr.setRequestHeader("Authorization", "Bearer " + cookie)
+    xhr.onreadystatechange = ->
+      # console.log(xhr.readyState, xhr.responseText)
+      if xhr.responseText?
+        newJson = JSON.parse(xhr.responseText).todos[0] #if xhr.readyState is 4
+        console.log(newJson)
+        blocker.parseJson(newJson)
+        # StorageArea.set(xhr.responseText, null)
+    xhr.send()
+  )
+  xhr
 
-setInterval(->
-  xhr.open("GET", "http://blocker.obscure.systems/get-todos", true)
-  xhr.onreadystatechange ->
-    newJson = JSON.parse(xhr.responseText) if xhr.readyState is 4
-, 60000)
+getJson()
+
+setInterval(getJson, 60000)
 
 chrome.tabs.onCreated.addListener((tab) ->
   console.log("Hey!")

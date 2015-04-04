@@ -11,11 +11,27 @@ class @Blocker
     ]
     @areBlocking = yes
     @toPage = false
+    @message = ""
 
+  getMessage: -> @message
+
+  reload: ->
+    StorageArea.get("todos", (items) ->
+      items.length
+      # for num in [0..length-1]
+      @list = items[0]
+      )
+
+  isLoggedIn: ->
+    chrome.cookies.get({url:"http://blocker.obscure.systems/", name:"token" })
 
   getList: -> @list
 
   parseJson: (json) ->
+    @areBlocking = yes
+    @message = json.message
+    @list = json.urls
+    @isWhitelist = json.whitelist
   # addSite: (url) ->
   #   @list.push(url)
   #
@@ -34,7 +50,6 @@ class @Blocker
     $///
 
   block: (id, url) ->
-
     if @toPage
       console.log("page")
       # chrome.tabs.update(id, {url:""})
