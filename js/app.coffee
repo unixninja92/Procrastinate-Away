@@ -1,5 +1,5 @@
 
-class @Blocker
+class Blocker
   constructor: ->
     @loggedIn = false
     @isWhitelist = false
@@ -19,3 +19,14 @@ class @Blocker
   block: (url) ->
     bool = @list.includes(url)
     if @isWhitelist then not bool else bool
+
+
+blocker = new Blocker
+
+chrome.extension.getBackgroundPage().getUrl( (tab) ->
+  if tab? and tab.url?
+    if blocker.block(tab.url)
+      $('block-blocked').show()
+    else
+      $('block-not-blocked').show()
+      )
