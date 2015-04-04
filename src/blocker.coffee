@@ -1,3 +1,11 @@
+makePattern = (url) -> ///^
+  (https?:\/\/)?
+  ([\da-z\.-]+)?
+  #{url}
+  ([\/\w \.-]*)*
+  \/?
+  $///
+
 
 class @Blocker
   constructor: ->
@@ -7,6 +15,7 @@ class @Blocker
       'cnn.com'
     ]
     @areBlocking = false
+    @toPage = false
 
 
   getList: -> @list
@@ -21,16 +30,24 @@ class @Blocker
 
   isWhitelist: -> @isWhitelist
 
-  blockToMessage: (id, url) ->
+  block: (id, url) ->
+    if toPage
+      chrome.tabs.update(id, {url:""})
+    else
+      chrome.tabs.update(id, {url:chrome.extension.getURL('blocked.html')})
 
-  blockToPage: (id, url, page) ->
-
-  isBlocked: (url, regex, time) ->
 
   checkUrl: (id, url, testmode) ->
     if @list?
-      bool = @list.indexOf(url) isnt -1
-      if @isWhitelist then not bool else bool
+      bool = false
+      for domain in @list
+        if url.match makePattern domain
+          bool = true
+          break
+      if @isWhitelist then bool = not bool
+      if testmode
+        block id, url
+      bool
 
   run: (tab) ->
     return false if not @areBlocking
