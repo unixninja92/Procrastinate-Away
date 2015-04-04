@@ -4,7 +4,7 @@ xhr = new XMLHttpRequest()
 @getBlocker = -> blocker
 
 chrome.cookies.onChanged.addListener((removed, cookie, cause) ->
-  if cookie.domain is ""
+  if cookie.domain is "blocker.obscure.systems"
     if removed
       xhr.open("GET", "http", true)
       xhr.onreadystatechange ->
@@ -22,5 +22,6 @@ chrome.tabs.onActivated.addListener((info) ->
   )
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) ->
-  blocker.run(tab) if changeInfo.status is 'loading'
+  if changeInfo.status is 'loading'
+    blocker.run(tab)
     )

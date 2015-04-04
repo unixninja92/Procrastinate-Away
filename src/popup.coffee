@@ -5,7 +5,7 @@ chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tab) ->
   if tab? and url?
     console.log(url)
     $('#block-np').hide()
-    if blocker.block(url)
+    if blocker.checkUrl(tab.id, url, true)
       $('#block-blocked').show()
     else
       $('#block-not-blocked').show()

@@ -21,7 +21,9 @@ class @Blocker
 
   isWhitelist: -> @isWhitelist
 
-  blocked: (id, url) ->
+  blockToMessage: (id, url) ->
+
+  blockToPage: (id, url, page) ->
 
   isBlocked: (url, regex, time) ->
 
