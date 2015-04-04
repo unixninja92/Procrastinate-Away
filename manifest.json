@@ -11,4 +11,9 @@
   /*"background": {
 
   },*/
+
+  "permissions": [
+    "tabs",
+    "*://*/*"
+  ],
 }
