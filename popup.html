@@ -1,9 +1,32 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <meta charset="utf-8" />
-      <title i18n="ext_name">Popup | </title>
-    </head>
-    <body>
-    </body>
+  <head>
+    <title>Getting Started Extension's Popup</title>
+    <script src="lib/jquery-2.0.0.min.js"></script>
+    <script src="js/popup.js"></script>
+  </head>
+  <body>
+    <div id="content" style="width: 600px; height: 100%;">
+      <div id="block">
+        <article id="block-np" hidden>
+          This page can't be blocked.
+        </article>
+        <article id="block-blocked" hidden>
+          This page is blocked.
+        </article>
+        <article id="block-not-blocked" hidden>
+          This page is not blocked.
+          <button id="block-this-site" class="submit">Block this site.</button>
+        </article>
+      </div>
+      <div id="account">
+        <article id="account-login" hidden>
+          <button id="account-login-button" class="submit">Login</button>
+        </article>
+        <article id="account-loggedin" hidden>
+          Logged in as
+        </article>
+      </div>
+    </div>
+  </body>
 </html>
