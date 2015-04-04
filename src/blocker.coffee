@@ -6,18 +6,30 @@ class @Blocker
     @list = [
       'cnn.com'
     ]
+    @areBlocking = false
+
 
   getList: -> @list
 
-  addSite: (url) ->
-    @list.push(url)
-
-  removeSite: (url) ->
-    index = @list.indexOf(url)
-    @list.splice(index, 1) #removes from array
+  parseJson: (json) ->
+  # addSite: (url) ->
+  #   @list.push(url)
+  #
+  # removeSite: (url) ->
+  #   index = @list.indexOf(url)
+  #   @list.splice(index, 1) #removes from array
 
   isWhitelist: -> @isWhitelist
 
-  block: (url) ->
-    bool = @list.indexOf(url) isnt -1
-    if @isWhitelist then not bool else bool
+  blocked: (id, url) ->
+
+  isBlocked: (url, regex, time) ->
+
+  checkUrl: (id, url, testmode) ->
+    if @list?
+      bool = @list.indexOf(url) isnt -1
+      if @isWhitelist then not bool else bool
+
+  run: (tab) ->
+    return false if not @areBlocking
+    checkUrl tab.id, tab.url, false

@@ -4,13 +4,17 @@
   "version": "0.0.1",
   "default_locale": "en",
 
+  "icons": { "48": "icon48.png",
+          "128": "icon128.png" },
+
   "browser_action": {
     "default_title": "__MSG_extName__",
     "default_popup": "popup.html"
   },
 
   "background": {
-    "scripts": ["lib/background.js"]
+    "scripts": ["lib/blocker.js", 
+      "lib/background.js"]
   },
 
   "permissions": [
