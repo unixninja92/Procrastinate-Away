@@ -3,7 +3,9 @@ class @Blocker
   constructor: ->
     @loggedIn = false
     @isWhitelist = false
-    @list = []
+    @list = [
+      'cnn.com'
+    ]
 
   getList: -> @list
 
@@ -17,5 +19,5 @@ class @Blocker
   isWhitelist: -> @isWhitelist
 
   block: (url) ->
-    bool = @list.includes(url)
+    bool = @list.indexOf(url) isnt -1
     if @isWhitelist then not bool else bool
