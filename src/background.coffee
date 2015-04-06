@@ -9,6 +9,9 @@ blocker = new Blocker()
   chrome.cookies.get({url:"http://blocker.obscure.systems/", name:"token" },
   (cook) ->
     cookie = cook.value
+    if not cookie?
+      blocker.clearList()
+      return
     xhr.open("GET", "http://blocker.obscure.systems/get-active-todos", true)
     xhr.setRequestHeader("Authorization", "Bearer " + cookie)
     xhr.onreadystatechange = ->
@@ -24,7 +27,7 @@ blocker = new Blocker()
 
 getJson()
 
-setInterval(getJson, 60000)
+setInterval(getJson, 6000)
 
 chrome.tabs.onCreated.addListener((tab) ->
   console.log("Hey!")

@@ -18,9 +18,11 @@
   },
 
   "permissions": [
+    "webRequest", 
+    "webRequestBlocking",
     "tabs",
-    "storage",
     "cookies",
-    "*://*/*"
+    "storage",
+    "<all_urls>"
     ]
 }

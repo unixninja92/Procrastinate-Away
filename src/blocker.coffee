@@ -15,6 +15,8 @@ class @Blocker
 
   getMessage: -> @message
 
+  clearList: -> @list = []
+
   reload: ->
     StorageArea.get("todos", (items) ->
       items.length
